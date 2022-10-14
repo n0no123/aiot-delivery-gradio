@@ -1,0 +1,7 @@
+av==9.2.0
+cvzone==1.5.6
+numpy==1.23.4
+mediapipe==0.8.11
+opencv_contrib_python==4.6.0.66
+streamlit_webrtc==0.43.4
+tensorflow==2.10.0

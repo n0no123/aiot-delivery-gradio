@@ -1,0 +1,4 @@
+0 Look
+1 Drink
+2 Eat
+3 Ok
