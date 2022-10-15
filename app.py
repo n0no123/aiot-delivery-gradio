@@ -12,7 +12,6 @@ labels = ["Look", "Drink", "Eat", "Ok"]
 offset = 20
 
 def segment(image):
-    result = "Abricot"
     hands, frame = detector.findHands(image)
     try:
         if hands:
