@@ -1,8 +1,7 @@
-import av
 import cv2
+import gradio as gr
 import math
 import numpy as np
-from streamlit_webrtc import webrtc_streamer
 from cvzone.ClassificationModule import Classifier
 from cvzone.HandTrackingModule import HandDetector
 
@@ -12,9 +11,9 @@ detector = HandDetector(maxHands=1)
 labels = ["Look", "Drink", "Eat", "Ok"]
 offset = 20
 
-def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
-    img = frame.to_ndarray(format="bgr24")
-    hands, frame = detector.findHands(img)
+def segment(image):
+    result = "Abricot"
+    hands, frame = detector.findHands(image)
     try:
         if hands:
             hand = hands[0]
@@ -39,14 +38,9 @@ def video_frame_callback(frame: av.VideoFrame) -> av.VideoFrame:
                 hGap = math.floor((bgSize - hComputed) / 2)
                 croppedHand[hGap: hComputed + hGap, :] = bgResize
             _, index = classifier.getPrediction(croppedHand, draw=False)
-            cv2.putText(frame, labels[index], (30, 30),
-                        cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 1)
+            return labels[index]
     except Exception as e:
         print(e)
-    return av.VideoFrame.from_ndarray(img, format="bgr24")
+    return 'No sign detected'
 
-webrtc_streamer(
-    key="Hand Sign Detection",
-    media_stream_constraints={"video": True, "audio": False},
-    video_frame_callback=video_frame_callback,
-)
+gr.interface.Interface(fn=segment, live=True, inputs=gr.Image(source='webcam', streaming=True), outputs="text").launch()
