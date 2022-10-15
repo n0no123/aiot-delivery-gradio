@@ -1,6 +1,5 @@
-cvzone==1.5.6
-gradio==3.4.1
-numpy==1.23.4
-mediapipe==0.8.11
-opencv_contrib_python==4.6.0.66
-tensorflow==2.10.0
+cvzone
+gradio
+mediapipe
+opencv_contrib_python
+tensorflow
